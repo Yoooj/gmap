@@ -1,0 +1,49 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Home Page" + Model;
+}
+
+<link href="~/Content/basic.css" rel="stylesheet" />
+<link href="~/Content/dropzone.css" rel="stylesheet" />
+<script src="~/Scripts/dropzone.js"></script>
+<script src="~/Scripts/dropzone.min.js"></script>
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+
+<div class="jumbotron">
+
+    <form action="~/Photo/SaveDropzoneJsUploadedFiles" class="dropzone dz-clickable dz-square btn-info" id="dropzone">
+        <input type="hidden" name="tripId" value="@Model" />
+    </form>
+@using (Html.BeginForm("MyTrips", "Trip"))
+{
+    <button id="submit-all" class="btn-success dz-message">Upload Pictures</button>
+}
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        
+        Dropzone.options.dropzone = {
+            //prevents Dropzone from uploading dropped files immediately
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            maxFilesize: 2,
+            acceptedFiles: "image/*",
+
+            init: function() {
+
+                var submitButton = document.querySelector("#submit-all");
+                var myDropzone = this; //closure
+
+                submitButton.addEventListener("click", function() {
+
+                    //tell Dropzone to process all queued files
+                    myDropzone.processQueue();
+                });
+
+            }
+        };
+    </script>
+}

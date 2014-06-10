@@ -1,0 +1,18 @@
+﻿@model TripGMap.ModelView.MarkerContent
+
+        <dl class="text-center">
+            <a id="image"
+               href="@Url.Action("GetImage", "Photo", new { photoId = Model.PhotoId })"
+               title="@Html.DisplayFor(model => model.Description)">
+                <img src="@Url.Action("GetImage", "Photo", new { photoId = Model.PhotoId })"
+                     width="100"
+                     height="100"
+                     alt="" />
+            </a>
+
+            <dd>
+                <b>@Html.DisplayNameFor(model => model.Author):</b> 
+                @Html.ActionLink("" + @Html.DisplayFor(model => model.Author),"Index", "Profile", 
+                new { authorId = Model.AuthorId })
+            </dd>
+        </dl>
