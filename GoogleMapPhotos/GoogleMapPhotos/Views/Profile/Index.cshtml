@@ -1,0 +1,62 @@
+﻿@model GoogleMapPhotos.ModelView.ProfileWithPictures
+@{
+    ViewBag.Title = "Index";
+}
+<script type="text/javascript" src="~/Scripts/jquery.fancybox.js"></script>
+<script src="~/Scripts/jquery.fancybox-buttons.js"></script>
+<script src="~/Scripts/jquery.fancybox-media.js"></script>
+<script src="~/Scripts/jquery.fancybox-thumbs.js"></script>
+<script src="~/Scripts/jquery.fancybox.pack.js"></script>
+<link href="~/Content/jquery.fancybox-buttons.css" rel="stylesheet" />
+<link href="~/Content/jquery.fancybox-thumbs.css" rel="stylesheet" />
+<link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+        <th>
+            @Html.DisplayNameFor(model => model.NickName)
+        </th>
+
+<td>
+    @Html.DisplayFor(model => model.NickName)
+</td>
+
+<script>
+    $("#image").fancybox({
+        'type': 'image'
+    });
+</script>
+
+<table class="table table-striped table-bordered table-condensed table-responsive" style="text-align: center; align-content: center">
+    <tr>
+        <th style="text-align: center;">
+            Picture
+        </th>
+        <th style="text-align: center;">
+            @Html.DisplayNameFor(model => model.Photos.First().TripName)
+        </th>
+        <th style="text-align: center;">
+            @Html.DisplayNameFor(model => model.Photos.First().Description)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Photos)
+    {
+        <tr>
+            <td>
+                <a id="image"
+                   href="@Url.Action("GetImage", "Photo", new {photoId = item.PhotoId})"
+                   title="@Html.DisplayText("item.Description")">
+                    <img src="@Url.Action("GetImage", "Photo", new {photoId = item.PhotoId})"
+                         width="100"
+                         height="100"
+                         alt="" />
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TripName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TripGMap.ModelView.Marker>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markermanager/src/markermanager.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.fancybox.js" ></script>
+<!-- Add jQuery library -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script src="~/Scripts/jquery.fancybox-buttons.js"></script>
+<script src="~/Scripts/jquery.fancybox-media.js"></script>
+<script src="~/Scripts/jquery.fancybox-thumbs.js"></script>
+<script src="~/Scripts/jquery.fancybox.pack.js"></script>
+<link href="~/Content/jquery.fancybox-buttons.css" rel="stylesheet" />
+<link href="~/Content/jquery.fancybox-thumbs.css" rel="stylesheet" />
+<link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+
+<script>
+    var map;
+    var mgr;
+    function initialize() {
+        var myOptions = {
+            zoom: 2,
+            center: new google.maps.LatLng(0, 0),
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+        mgr = new MarkerManager(map);
+        var infoWindow = new google.maps.InfoWindow({ content: "Loading... Please wait! :)" });
+
+        google.maps.event.addListener(mgr, 'loaded', function () {
+
+            @foreach (var place in Model) {
+                <text>
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng('@place.Latitude', '@place.Longtitude')
+            });
+
+            google.maps.event.addListener(marker, "click", function () {
+                $.ajax({
+                    url: '@Url.Action("GetMarkerContent", "Photo")',
+                    type: "GET",
+                    data: { photoId: '@place.ImageId' },
+                    success: function (data) {
+                        infoWindow.setContent(data);
+                    }
+                });
+                infoWindow.open(map, this);
+            });
+
+            mgr.addMarker(marker, 0);
+            </text>
+            }
+            mgr.refresh();
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    $("#image").fancybox({
+        'type': 'image'
+    });
+
+</script>
+
+<div id="googleMap" style="height: 500px"></div>

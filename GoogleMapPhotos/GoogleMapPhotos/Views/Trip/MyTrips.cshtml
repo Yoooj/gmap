@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TripGMap.Models.TripModel.Trip>
+
+@{
+    ViewBag.Title = "MyTrips";
+}
+
+<h2>Manage your Trips here!</h2>
+
+<p>
+    @Html.ActionLink("Create New Trip!", "Create")
+</p>
+
+@if (!Model.Any())
+{
+    <tr><td>There are no Trips! Go ahead and create one!</td></tr>
+}
+else
+{
+    <table class="table table-striped table-bordered table-condensed">
+        <tr>
+            <th class="col-sm-1" style="text-align: center">
+                @Html.DisplayNameFor(model => model.TripName)
+            </th>
+            <th class="col-sm-1" style="text-align: center">
+                @Html.Label("Options")
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr style ="text-align: center">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripName)
+                </td>
+                <td>
+                    @Html.ActionLink("Show Photos", "Index", "Photo", new { item.TripId }, null) |
+                    @Html.ActionLink("Delete", "Delete", "Trip", new { item.TripId }, null) |
+                    @Html.ActionLink("Change Name", "Edit", "Trip", new { item.TripId }, null) |
+                    @Html.ActionLink("Show on Map", "ShowMarkers", "Home", new { item.TripId }, null)
+                </td>
+            </tr>
+        }
+
+    </table>
+}

@@ -1,0 +1,43 @@
+﻿@model TripGMap.Models.PhotoModel.Photo
+
+<script type="text/javascript" src="~/Scripts/jquery.fancybox.js"></script>
+<script src="~/Scripts/jquery.fancybox-buttons.js"></script>
+<script src="~/Scripts/jquery.fancybox-media.js"></script>
+<script src="~/Scripts/jquery.fancybox-thumbs.js"></script>
+<script src="~/Scripts/jquery.fancybox.pack.js"></script>
+<link href="~/Content/jquery.fancybox-buttons.css" rel="stylesheet" />
+<link href="~/Content/jquery.fancybox-thumbs.css" rel="stylesheet" />
+<link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <script>
+            $("#image").fancybox({
+                'type': 'image'
+            });
+        </script>
+
+        <a id="image"
+           href="@Url.Action("GetImage", "Photo", new { photoId = Model.PhotoId })"
+           title="Are you sure you want to delete this?">
+        <img src="@Url.Action("GetImage", "Photo", new { photoId = Model.PhotoId })"
+             width="300"
+             height="300"
+             alt="" />
+         </a>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <input type="submit" value="Delete" class="btn btn-default" /> 
+            <div>
+                @Html.ActionLink("Back to List", "Index", new { tripId = Model.TripId })
+            </div>
+        </div>
+    }
+</div>

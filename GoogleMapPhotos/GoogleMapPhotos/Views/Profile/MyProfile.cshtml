@@ -1,0 +1,17 @@
+﻿@model TripGMap.Models.ProfileModel.Profile
+
+@{
+    ViewBag.Title = Model.WelcomeMessage;
+}
+
+<h2>@Model.WelcomeMessage</h2>
+
+<th>
+    @Html.DisplayNameFor(model => model.Owner):
+</th>
+
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.NickName)
+    </td>
+</tr>
